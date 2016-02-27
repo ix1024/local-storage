@@ -40,7 +40,7 @@
 				localStorage.setItem(name, value);
 			} else {
 				try {
-					this.userDataStroage.setItem(name, value)
+					this.userDataStroage.setItem(name, value);
 				} catch (e) {
 					this.setCookie(name, value, expires, path, domain, secure);
 				}

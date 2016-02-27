@@ -12,8 +12,8 @@
 	 storage.remove('name');
 
 ### Js Code ###
-
-
+	
+	
 	/*
 		Name:   本地存储兼容解决方案;
 		Author: Kingwell Leng;
@@ -33,16 +33,32 @@
 				} catch (e) {}
 			},
 			set: function(sName, sValue, oExpires, sPath, sDomain, bSecure) {
+				var cookies, name, value, expires, path, domain, secure;
 				if (arguments.length < 2) {
 					return false;
 				}
+				if (typeof arguments[0] === 'object') {
+					name = arguments[0]['name'];
+					value = arguments[0]['value'];
+					expires = arguments[0]['expires'];
+					path = arguments[0]['path'];
+					domain = arguments[0]['domain'];
+					secure = arguments[0]['secure'];
+				} else {
+					name = sName;
+					value = sValue;
+					expires = oExpires;
+					path = sPath;
+					domain = sDomain;
+					secure = bSecure;
+				}
 				if (isSupportLocalStorage) {
-					localStorage.setItem(sName, sValue);
+					localStorage.setItem(name, value);
 				} else {
 					try {
-						this.userDataStroage.setItem(sName, sValue)
+						this.userDataStroage.setItem(name, value)
 					} catch (e) {
-						this.setCookie(sName, sValue, oExpires, sPath, sDomain, bSecure);
+						this.setCookie(name, value, expires, path, domain, secure);
 					}
 				}
 				return sValue;
